@@ -104,7 +104,7 @@ startRunning(dog);
 
 ## CLASS
 
-#### une classe peut implémenter d'une interface
+#### une classe peut implémenter une interface
 
 ```
 interface Dog {
