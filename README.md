@@ -187,3 +187,24 @@ dogs.onCanSleep(myDog);
 ```
 
 > **Note:** le résultat est *Mon chien wolf ne dort pas*
+
+## PRIVATE / PUBLIC
+
+#### ajouter public ou private à un paramètre de constructeur permet de créer et d'initialiser un membre privé ou public. On évite ainsi son équivalent plus verbeux.
+
+```
+class Student {
+  constructor(private eleve: string) { }
+
+  getEleve() {
+    console.log(this.eleve);
+  }
+}
+
+const eleve = new Student('Charles');
+
+eleve.getEleve();
+```
+
+> **Note:** le résultat est *Charles*
+
