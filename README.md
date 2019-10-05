@@ -102,4 +102,88 @@ startRunning(dog);
 
 > **Note:** le résultat est *dog runs 10m*
 
+## CLASS
 
+#### une classe peut implémenter d'une interface
+
+```
+interface Dog {
+  name: string;
+  eating: boolean;
+}
+
+interface CanEat {
+  onCanEat(dog: Dog): void;
+}
+
+class Dogs implements CanEat {
+  onCanEat(dog: Dog) {
+    if (dog.eating) {
+      console.log(`Mon chien ${dog.name} est en train de manger`);
+    } else {
+      console.log(`Mon chien ${dog.name} ne mange pas`);
+    }
+  }
+}
+
+const myDog = {
+  name: 'wolf',
+  eating: true
+}
+
+const dogs = new Dogs()
+
+dogs.onCanEat(myDog);
+```
+
+> **Note:** le résultat est *Mon chien wolf est en train de manger*
+
+#### une classe peut implémenter une interface qui étend elle-même de plusieurs interface
+
+```
+interface Dog {
+  name: string;
+  eating: boolean;
+  sleeping: boolean;
+}
+
+interface CanEat {
+  onCanEat(dog: Dog): void;
+}
+
+interface CanSleep {
+  onCanSleep(dog: Dog): void;
+}
+
+interface Animal extends CanEat, CanSleep { }
+
+class Dogs implements Animal {
+  onCanEat(dog: Dog) {
+    if (dog.eating) {
+      console.log(`Mon chien ${dog.name} est en train de manger`);
+    } else {
+      console.log(`Mon chien ${dog.name} ne mange pas`);
+    }
+  }
+
+  onCanSleep(dog: Dog) {
+    if (dog.sleeping) {
+      console.log(`Mon chien ${dog.name} est en train de dormir`);
+    } else {
+      console.log(`Mon chien ${dog.name} ne dort pas`);
+    }
+  }
+}
+
+const myDog = {
+  name: 'wolf',
+  eating: true,
+  sleeping: false
+}
+
+const dogs = new Dogs()
+
+dogs.onCanSleep(myDog);
+```
+
+> **Note:** le résultat est *Mon chien wolf ne dort pas*
