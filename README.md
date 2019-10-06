@@ -208,3 +208,62 @@ eleve.getEleve();
 
 > **Note:** le résultat est *Charles*
 
+## DECORATEUR
+
+#### Un décorateur est une façon de faire de la méta-programmation. Ils ressemblent beaucoup aux annotations utilisées en Java
+
+Leur rôle est assez simple: ils ajoutent des métadonnées à nos classes, propriétés ou paramètres pour par exemple indiquer "cette classe est un composant", "cette dépendance est optionnelle", "ceci est une propriété spéciale du composant", etc…
+
+Nous allons construire un décoratuer très simple : @Log(). Il va écrire le nom de la méthode à chaque fois qu’elle sera appelée.
+
+```
+class RaceService { 
+	@Log()
+	getRaces() {
+		const description = "Lister l'ensemble des courses";
+	}
+
+	@Log()
+	getRace(raceId: number) {
+		const description = "Lister la course #${raceId}";
+	} 
+}
+```
+
+Pour définir le décorateur, nous devons écrire une méthode renvoyant une fonction comme celle-ci :
+
+```
+const Log = function () {
+  return (target: any, name: string, descriptor: any) => { 
+    const originalMethod = descriptor.value;
+    console.log(`méthode appelée depuis ${name}`);
+    console.log(`méthode originale contient ${originalMethod}`);
+
+		return descriptor;
+	}; 
+};
+```
+
+> **Note:** Selon l’emplacement du décorateur, la fonction n’aura pas exactement les mêmes arguments.
+> 
+> Ici nous avons un décorateur de méthode, qui prend 3 paramètres :
+	• **target** : la méthode ciblée par notre décorateur
+	• **name** : le nom de la méthode ciblée
+	• **descriptor** : le descripteur (le contenu) de la méthode ciblée
+
+Pour tester
+
+```
+const raceService = new RaceService();
+```
+
+> ** Note:** le résultat est :
+> méthode appelée depuis getRaces
+> méthode originale contient getRaces() {
+        const description = "Lister l'ensemble des courses";
+    }
+    méthode appelée depuis getRace
+    méthode originale contient getRace(raceId) {
+        const description = "Lister la course #${raceId}";
+    }
+
